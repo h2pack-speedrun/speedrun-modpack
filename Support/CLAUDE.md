@@ -68,8 +68,9 @@ loader.load(init, init)
 - `lib.isEnabled(config, "speedrun")` — checks module's Enabled AND coordinator's ModEnabled
 
 ### Module types
-- **Regular**: flat `config.Enabled` + optional inline options (checkbox/dropdown/radio)
+- **Regular**: flat `config.Enabled` + optional inline options (checkbox/dropdown/radio). Options support a `tooltip` field rendered on hover.
 - **Special**: `special = true`, own sidebar tab, `stateSchema` for hashing, staging table
+- **Bundle**: multiple behaviors merged into one module using the self-registering pattern (see `Support/submodule_merger.md`). Each `src/behaviors/*.lua` file appends to three module-global tables declared in `main.lua`: `apply_fns` `{ key, fn }`, `hook_fns` (plain functions), `option_fns` (option descriptors).
 
 ### Key technical details
 - **Lua 5.1** runtime (Hades 2 engine), 32-bit integers only
@@ -83,18 +84,19 @@ loader.load(init, init)
 - `h2pack-speedrun` — this pack's coordinator + all module repos
 - `h2-modpack` — Framework, Lib, Setup, h2-modpack-template, h2-modular-modpack (infrastructure, shared)
 
-## Current Modules (34)
+## Current Modules (8)
 
-adamant-BraidFix, adamant-CardioTorchFix, adamant-CharybdisBehavior, adamant-CorrosionFix,
-adamant-DisableArachnePity, adamant-DisableSeleneBeforeBoon, adamant-EscalatingFigLeaf,
-adamant-ETFix, adamant-ExtraDoseFix, adamant-FamiliarDelayFix, adamant-FirstHammer,
-adamant-ForceArachne, adamant-ForceMedea, adamant-GGGFix, adamant-KBMEscape,
-adamant-MiniBossEncounterFix, adamant-OmegaCastFix, adamant-PoseidonWavesFix,
-adamant-PreventEchoScam, adamant-SecondStageChanneling, adamant-SeleneFix,
-adamant-ShimmeringFix, adamant-ShowLocation, adamant-SkipDeathCutscene,
-adamant-SkipDialogue, adamant-SkipGemBossReward, adamant-SkipRunEndCutscene,
-adamant-SpawnLocation, adamant-SpeedrunTimer, adamant-StagedOmegaFix,
-adamant-SufferingFix, adamant-SurfaceStructure, adamant-TidalRingFix, adamant-VictoryScreen
+### Bundle modules — self-registering behavior pattern, see `Support/submodule_merger.md`
+- **adamant-BugFixesBoons** — BraidFix, CardioTorchFix, ETFix, OmegaCastFix, PoseidonWavesFix, SecondStageChanneling, ShimmeringFix
+- **adamant-BugFixesEncounters** — CorrosionFix, FamiliarDelayFix, GGGFix, MiniBossEncounterFix, SufferingFix
+- **adamant-BugFixesWeapons** — ExtraDoseFix, SeleneFix, StagedOmegaFix, TidalRingFix
+- **adamant-RunModsNPCs** — DisableArachnePity, DisableSeleneBeforeBoon, ForceArachne, ForceMedea, PreventEchoScam
+- **adamant-RunModsWorld** — CharybdisBehavior, EscalatingFigLeaf, SkipGemBossReward, SurfaceStructure
+- **adamant-QoL** — KBMEscape, ShowLocation, SkipDeathCutscene, SkipDialogue, SkipRunEndCutscene, SpawnLocation, VictoryScreen
+
+### Standalone modules
+- **adamant-FirstHammer**
+- **adamant-SpeedrunTimer**
 
 ## Common Tasks
 
@@ -119,9 +121,10 @@ Use **Actions → Release All** on the shell repo. Mass releases must end in `.0
 
 ### Sync submodule list
 ```bash
-python Setup/scaffold/register_submodules.py           # add any new Submodules/ folders
-python Setup/scaffold/register_submodules.py --prune   # also remove orphaned entries
+python Setup/scaffold/register_submodules.py           # add any new Submodules/ folders + sync Core deps
+python Setup/scaffold/register_submodules.py --prune   # also remove orphaned entries + sync Core deps
 ```
+Also updates the managed `# -- submodules-start -- / # -- submodules-end --` block in the Core module's `thunderstore.toml` with the current submodule set and their versions.
 
 ## CI/CD
 

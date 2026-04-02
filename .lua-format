@@ -1,1 +1,9 @@
-column_limit: 120
+<!-- column_limit: 120 -->
+column_limit: 80            # Force breaks when lines get too long
+indent_width: 4
+
+align_table_field: true     # Aligns the '=' or ':' in tables
+break_after_table_lb: true  # Forces a newline after the opening '{'
+break_before_table_rb: true # Forces a newline before the closing '}'
+chop_down_table: true       # Put each table element on a new line if it exceeds limit
+
