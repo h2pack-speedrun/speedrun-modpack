@@ -6,43 +6,43 @@
 	path = adamant-ModpackFramework
 	url = https://github.com/h2-modpack/adamant-ModpackFramework.git
 	branch = main
-[submodule "adamant-ModpackSpeedrunCore"]
-	path = adamant-ModpackSpeedrunCore
-	url = https://github.com/h2pack-speedrun/adamant-ModpackSpeedrunCore.git
+[submodule "adamant-Speedrun_Core"]
+	path = adamant-Speedrun_Core
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Core.git
 	branch = main
 [submodule "Setup"]
 	path = Setup
 	url = https://github.com/h2-modpack/Setup.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunFirstHammer"]
-	path = Submodules/adamant-SpeedrunFirstHammer
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunFirstHammer.git
+[submodule "Submodules/adamant-Speedrun_FirstHammer"]
+	path = Submodules/adamant-Speedrun_FirstHammer
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_FirstHammer.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunTimer"]
-	path = Submodules/adamant-SpeedrunTimer
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunTimer.git
+[submodule "Submodules/adamant-Speedrun_Timer"]
+	path = Submodules/adamant-Speedrun_Timer
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Timer.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunBugFixesBoons"]
-	path = Submodules/adamant-SpeedrunBugFixesBoons
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunBugFixesBoons.git
+[submodule "Submodules/adamant-Speedrun_BugFixesBoons"]
+	path = Submodules/adamant-Speedrun_BugFixesBoons
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesBoons.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunBugFixesEncounters"]
-	path = Submodules/adamant-SpeedrunBugFixesEncounters
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunBugFixesEncounters.git
+[submodule "Submodules/adamant-Speedrun_BugFixesEncounters"]
+	path = Submodules/adamant-Speedrun_BugFixesEncounters
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesEncounters.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunBugFixesWeapons"]
-	path = Submodules/adamant-SpeedrunBugFixesWeapons
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunBugFixesWeapons.git
+[submodule "Submodules/adamant-Speedrun_BugFixesWeapons"]
+	path = Submodules/adamant-Speedrun_BugFixesWeapons
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesWeapons.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunRunModsNPCs"]
-	path = Submodules/adamant-SpeedrunRunModsNPCs
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunRunModsNPCs.git
+[submodule "Submodules/adamant-Speedrun_RunModsNPCs"]
+	path = Submodules/adamant-Speedrun_RunModsNPCs
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_RunModsNPCs.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunRunModsWorld"]
-	path = Submodules/adamant-SpeedrunRunModsWorld
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunRunModsWorld.git
+[submodule "Submodules/adamant-Speedrun_RunModsWorld"]
+	path = Submodules/adamant-Speedrun_RunModsWorld
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_RunModsWorld.git
 	branch = main
-[submodule "Submodules/adamant-SpeedrunQoL"]
-	path = Submodules/adamant-SpeedrunQoL
-	url = https://github.com/h2pack-speedrun/adamant-SpeedrunQoL.git
+[submodule "Submodules/adamant-Speedrun_QoL"]
+	path = Submodules/adamant-Speedrun_QoL
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_QoL.git
 	branch = main
