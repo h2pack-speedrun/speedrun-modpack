@@ -53,14 +53,19 @@ jobs:
           ORG="h2pack-speedrun"
 
           REGISTRY_MODULES=$(gh api repos/$ORG/speedrun-modpack/contents/Submodules \
-            --jq '.[].name' | grep '^adamant-' | sed 's/^adamant-//')
+            --jq '.[].name' | grep '^adamant-')
 
-          mapfile -t ALL_REPOS <<< "$(printf 'ModpackSpeedrunCore\n%s' "$REGISTRY_MODULES")"
+          mapfile -t ALL_REPOS <<< "$(printf 'adamant-Speedrun_Core\n%s' "$REGISTRY_MODULES")"
 
           if [ -n "$FILTER" ]; then
             IFS=',' read -ra REPOS <<< "$FILTER"
             for i in "${!REPOS[@]}"; do
               REPOS[$i]=$(echo "${REPOS[$i]}" | xargs)
+              if [ "${REPOS[$i]}" = "ModpackSpeedrunCore" ] || [ "${REPOS[$i]}" = "adamant-Speedrun_Core" ]; then
+                REPOS[$i]="adamant-Speedrun_Core"
+              elif [[ "${REPOS[$i]}" != adamant-* ]]; then
+                REPOS[$i]="adamant-${REPOS[$i]}"
+              fi
             done
           else
             REPOS=("${ALL_REPOS[@]}")
