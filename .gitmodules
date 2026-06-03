@@ -58,7 +58,7 @@
 	path = Submodules/adamant-Speedrun_Select_First_Hammer
 	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Select_First_Hammer.git
 	branch = main
-[submodule "Submodules/adamant-Speedrun_Live_Split"]
-	path = Submodules/adamant-Speedrun_Live_Split
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Live_Split.git
+[submodule "Submodules/adamant-Speedrun_LiveSplit"]
+	path = Submodules/adamant-Speedrun_LiveSplit
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_LiveSplit.git
 	branch = main
