@@ -46,3 +46,11 @@
 	path = Submodules/adamant-Speedrun_QoL
 	url = https://github.com/h2pack-speedrun/adamant-Speedrun_QoL.git
 	branch = main
+[submodule "Submodules/adamant-Speedrun_GameplayQoL"]
+	path = Submodules/adamant-Speedrun_GameplayQoL
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_GameplayQoL.git
+	branch = main
+[submodule "Submodules/adamant-Speedrun_BalanceChanges"]
+	path = Submodules/adamant-Speedrun_BalanceChanges
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BalanceChanges.git
+	branch = main
