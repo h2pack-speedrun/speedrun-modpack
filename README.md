@@ -20,7 +20,7 @@ git clone --recurse-submodules https://github.com/h2pack-speedrun/speedrun-modpa
 python ModpackTools/deploy/deploy_all.py
 ```
 
-Requires Python 3 and r2modman with a profile named `h2-dev`. On Windows, run `ModpackTools/win.bat` as Administrator. On Linux/macOS, run `sudo ./ModpackTools/lin.sh`.
+Requires Python 3 and r2modman with a profile named `h2-dev`. Creating local symlinks may require Administrator permissions on Windows or `sudo` on Linux/macOS.
 
 ## Shared Docs
 
