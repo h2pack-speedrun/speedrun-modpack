@@ -17,7 +17,7 @@ speedrun-modpack/
 
 ```bash
 git clone --recurse-submodules https://github.com/h2pack-speedrun/speedrun-modpack.git
-python ModpackTools/deploy/deploy_all.py
+python ModpackTools/local_deploy/deploy_all.py
 ```
 
 Requires Python 3 and r2modman with a profile named `h2-dev`. Creating local symlinks may require Administrator permissions on Windows or `sudo` on Linux/macOS.

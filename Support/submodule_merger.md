@@ -215,11 +215,9 @@ Run once per bundle, in any order. Each bundle is independent.
 
 ### Step 1 — Scaffold
 ```bash
-python ModpackTools/scaffold/new_module.py \
-  --name BugFixesBoons \
-  --pack-id speedrun \
-  --namespace adamant \
-  --org h2pack-speedrun
+python ModpackTools/new_module/create.py \
+  --package-id BugFixesBoons \
+  --title "Bug Fixes Boons"
 ```
 Repeat for each bundle name.
 
@@ -254,7 +252,7 @@ git push
 
 ### Step 7 — Deploy and verify
 ```bash
-python ModpackTools/deploy/deploy_all.py --overwrite
+python ModpackTools/local_deploy/deploy_all.py --overwrite
 ```
 Load in r2modman (`h2-dev` profile). Toggle each behavior independently and confirm it works.
 
@@ -262,11 +260,11 @@ Load in r2modman (`h2-dev` profile). Toggle each behavior independently and conf
 For each absorbed module:
 - Archive the GitHub repo: `gh repo archive h2pack-speedrun/<RepoName>`
 - Remove its entry from `.gitmodules` and delete its `Submodules/` folder
-- Run `python ModpackTools/scaffold/register_submodules.py --prune`
+- Run `python ModpackTools/new_module/register_submodules.py --prune`
 
 ### Step 9 — Final deploy + release
 ```bash
-python ModpackTools/deploy/deploy_all.py --overwrite
+python ModpackTools/local_deploy/deploy_all.py --overwrite
 # Actions → Release All — use a .0 version (mass release)
 ```
 

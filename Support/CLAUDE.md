@@ -9,22 +9,16 @@ speedrun-modpack/
 ├── adamant-ModpackSpeedrunCore/  # Coordinator: packId="speedrun", windowTitle="Speedrun", config, profiles
 ├── adamant-ModpackFramework/     # Reusable library: discovery, hash, HUD, UI (org: h2-modpack)
 ├── adamant-ModpackLib/           # Shared utilities: backup, field types, state mgmt (org: h2-modpack)
-├── ModpackTools/                        # Deploy + scaffold + migrate scripts (submodule: h2-modpack/ModpackTools)
-│   ├── deploy/
-│   │   ├── deploy_all.py         # Full deploy (assets + manifests + symlinks + hooks)
-│   │   ├── deploy_links.py
-│   │   ├── deploy_manifests.py
-│   │   ├── deploy_assets.py
-│   │   ├── deploy_hooks.py
-│   │   └── deploy_common.py
-│   ├── scaffold/
-│   │   ├── new_module.py         # Scaffold a new module repo from ModpackModuleTemplate
-│   │   ├── new_pack.py           # Scaffold a new shell repo
-│   │   └── register_submodules.py  # Sync .gitmodules with Submodules/ folders (--prune to remove orphans)
-│   └── migrate/
-│       ├── transfer_repos.py     # Transfer repos between GitHub orgs, outputs repos.txt
-│       ├── rewire.py             # Update .gitmodules URLs + git submodule sync
-│       └── bulk_add.py           # Add submodules from repos.txt
+├── ModpackTools/                        # Local deploy, module creation, release helpers
+│   ├── local_deploy/
+│   │   ├── deploy_all.py         # Full local deploy (assets + manifests + symlinks + hooks)
+│   │   └── steps/                # Deploy implementation modules
+│   ├── new_module/
+│   │   ├── create.py             # Create a new module repo from ModpackModuleTemplate
+│   │   ├── register_submodules.py  # Sync .gitmodules with Submodules/ folders (--prune to remove orphans)
+│   │   └── coordinator_deps.py   # Sync coordinator dependency block
+│   └── github/
+│       └── release_all.py        # Dispatch pack-wide release workflows
 ├── Submodules/
 │   └── adamant-*/                # 34 standalone modules (each its own repo under h2pack-speedrun)
 ├── Support/
@@ -62,7 +56,7 @@ loader.load(init, init)
 
 ### Modules
 
-- Each module declares `public.definition` with `modpack = "speedrun"` (set by `new_module.py`)
+- Each module declares `public.definition` with `modpack = "speedrun"` (set by `create.py`)
 - Framework discovers modules by scanning `rom.mods` for `modpack = "speedrun"`
 - `lib.isCoordinated("speedrun")` — true when coordinator is running
 - `lib.isEnabled(config, "speedrun")` — checks module's Enabled AND coordinator's ModEnabled
@@ -102,18 +96,16 @@ loader.load(init, init)
 
 ### Add a new module
 ```bash
-python ModpackTools/scaffold/new_module.py \
-  --name MyModName \
-  --pack-id speedrun \
-  --namespace adamant \
-  --org h2pack-speedrun
+python ModpackTools/new_module/create.py \
+  --package-id My_Module \
+  --title "My Module"
 ```
-Creates GitHub repo `h2pack-speedrun/MyModName`, clones into `Submodules/adamant-MyModName`, fills PACK_ID, registers as submodule.
+Creates a GitHub repo under the pack org, clones into `Submodules/`, fills module identity, and registers it as a submodule.
 
 ### Local deploy
 ```bash
-python ModpackTools/deploy/deploy_all.py
-python ModpackTools/deploy/deploy_all.py --overwrite   # regenerate manifests
+python ModpackTools/local_deploy/deploy_all.py
+python ModpackTools/local_deploy/deploy_all.py --overwrite   # regenerate manifests
 ```
 
 ### Release
@@ -121,10 +113,10 @@ Use **Actions → Release All** on the shell repo. Mass releases must end in `.0
 
 ### Sync submodule list
 ```bash
-python ModpackTools/scaffold/register_submodules.py           # add any new Submodules/ folders + sync Core deps
-python ModpackTools/scaffold/register_submodules.py --prune   # also remove orphaned entries + sync Core deps
+python ModpackTools/new_module/register_submodules.py           # add any new Submodules/ folders + sync coordinator deps
+python ModpackTools/new_module/register_submodules.py --prune   # also remove orphaned entries + sync coordinator deps
 ```
-Also updates the managed `# -- submodules-start -- / # -- submodules-end --` block in the Core module's `thunderstore.toml` with the current submodule set and their versions.
+Also updates the managed `# -- submodules-start -- / # -- submodules-end --` block in the coordinator module's `thunderstore.toml` with the current submodule set and their versions.
 
 ## CI/CD
 

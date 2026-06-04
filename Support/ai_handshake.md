@@ -32,7 +32,7 @@ March 26, 2026
 
 5. **ModpackTools/ → own submodule (done)**: `ModpackTools/` is now its own repo (`h2-modpack/ModpackTools`), referenced as a submodule in shell repos. `new_pack.py` lives there and adds it as a submodule in new packs. README added.
 
-6. **`new_pack.py`**: Scaffolds a new shell repo from scratch. Creates the coordinator GitHub repo via `gh repo create`, adds Lib and Framework as submodules, generates all coordinator files pre-filled, copies ModpackTools/ scripts with a customized `deploy_common.py`. Usage: `python ModpackTools/new_pack.py --output PATH --pack-id ID --title TITLE --namespace NS [--name Modpack_Core] [--org h2-modpack]`.
+6. **`new_pack.py`**: Scaffolds a new shell repo from scratch. Creates the coordinator GitHub repo via `gh repo create`, adds Lib, Framework, and ModpackTools as submodules, and generates coordinator files pre-filled.
 
 7. **Framework git history rewritten**: All commits rewritten to `maybe-adamant <maybe.adamant@gmail.com>` via `git filter-branch`.
 
@@ -46,7 +46,7 @@ March 26, 2026
 - `adamant-modpack-coordinator/thunderstore.toml` — websiteUrl updated to `h2-modpack-coordinator`
 - `adamant-modpack-coordinator/src/manifest.json` — website_url updated
 - `.gitmodules` — Framework added; coordinator name/path fixed (`adamant-modpack-coordinator`)
-- `ModpackTools/deploy_common.py` — coordinator path updated to `adamant-modpack-coordinator`
+- `ModpackTools/local_deploy/steps/common.py` — coordinator path updated to `adamant-modpack-coordinator`
 - `ModpackTools/new_pack.py` — created: full shell repo scaffolding script
 - `adamant-modpack-Framework/.luacheckrc` — corrected globals for Framework
 - `adamant-modpack-Framework/tests/` — moved from Core; TestHash uses `Framework.createHash` directly
