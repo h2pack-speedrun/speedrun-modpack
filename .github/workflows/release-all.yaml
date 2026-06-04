@@ -45,8 +45,8 @@ jobs:
         run: |
           python3 Setup/github/release_all.py \
             --org "h2pack-speedrun" \
-            --namespace "adamantSpeedrun" \
-            --pack-pascal "Speedrun" \
+            --team "adamantSpeedrun" \
+            --legacy-package-prefix "Speedrun" \
             --core-repo "adamantSpeedrun-Speedrun_Modpack" \
             --tag "$TAG" \
             --child-dry-run "$DRY_RUN" \
@@ -109,8 +109,8 @@ jobs:
         run: |
           python3 Setup/github/release_all.py \
             --org "h2pack-speedrun" \
-            --namespace "adamantSpeedrun" \
-            --pack-pascal "Speedrun" \
+            --team "adamantSpeedrun" \
+            --legacy-package-prefix "Speedrun" \
             --core-repo "adamantSpeedrun-Speedrun_Modpack" \
             --tag "$TAG" \
             --child-dry-run "$DRY_RUN" \
