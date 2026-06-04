@@ -18,7 +18,7 @@ March 26, 2026
 
 ### What was being worked on
 
-**Phase 2: complete.** Framework extraction done, Setup/ extracted to standalone submodule, all housekeeping verified. Next: create a second modpack (run-director) using `new_pack.py`.
+**Phase 2: complete.** Framework extraction done, ModpackTools/ extracted to standalone submodule, all housekeeping verified. Next: create a second modpack (run-director) using `new_pack.py`.
 
 ### Key decisions made this session
 
@@ -30,9 +30,9 @@ March 26, 2026
 
 4. **Core renamed to coordinator**: GitHub repo `h2-modpack-Core` → `h2-modpack-coordinator`. Local folder `adamant-modpack-Core` → `adamant-modpack-coordinator`. Thunderstore mod identity (`adamant-Modpack_Core`) unchanged.
 
-5. **Setup/ → own submodule (done)**: `Setup/` is now its own repo (`h2-modpack/Setup`), referenced as a submodule in shell repos. `new_pack.py` lives there and adds it as a submodule in new packs. README added.
+5. **ModpackTools/ → own submodule (done)**: `ModpackTools/` is now its own repo (`h2-modpack/ModpackTools`), referenced as a submodule in shell repos. `new_pack.py` lives there and adds it as a submodule in new packs. README added.
 
-6. **`new_pack.py`**: Scaffolds a new shell repo from scratch. Creates the coordinator GitHub repo via `gh repo create`, adds Lib and Framework as submodules, generates all coordinator files pre-filled, copies Setup/ scripts with a customized `deploy_common.py`. Usage: `python Setup/new_pack.py --output PATH --pack-id ID --title TITLE --namespace NS [--name Modpack_Core] [--org h2-modpack]`.
+6. **`new_pack.py`**: Scaffolds a new shell repo from scratch. Creates the coordinator GitHub repo via `gh repo create`, adds Lib and Framework as submodules, generates all coordinator files pre-filled, copies ModpackTools/ scripts with a customized `deploy_common.py`. Usage: `python ModpackTools/new_pack.py --output PATH --pack-id ID --title TITLE --namespace NS [--name Modpack_Core] [--org h2-modpack]`.
 
 7. **Framework git history rewritten**: All commits rewritten to `maybe-adamant <maybe.adamant@gmail.com>` via `git filter-branch`.
 
@@ -46,8 +46,8 @@ March 26, 2026
 - `adamant-modpack-coordinator/thunderstore.toml` — websiteUrl updated to `h2-modpack-coordinator`
 - `adamant-modpack-coordinator/src/manifest.json` — website_url updated
 - `.gitmodules` — Framework added; coordinator name/path fixed (`adamant-modpack-coordinator`)
-- `Setup/deploy_common.py` — coordinator path updated to `adamant-modpack-coordinator`
-- `Setup/new_pack.py` — created: full shell repo scaffolding script
+- `ModpackTools/deploy_common.py` — coordinator path updated to `adamant-modpack-coordinator`
+- `ModpackTools/new_pack.py` — created: full shell repo scaffolding script
 - `adamant-modpack-Framework/.luacheckrc` — corrected globals for Framework
 - `adamant-modpack-Framework/tests/` — moved from Core; TestHash uses `Framework.createHash` directly
 - `adamant-modpack-Framework/.github/workflows/test.yaml` — created
@@ -59,12 +59,12 @@ March 26, 2026
 - **Create second modpack** (run-director) via `new_pack.py` — this is Phase 3 / the next step.
 - **HUD stacking**: implemented as multiple `ScreenData.HUD.ComponentData` elements (`ModpackMark_<packId>`, `Y = 250 + (packIndex-1) * 24`). Needs in-game validation once two packs run simultaneously.
 - **Framework not yet published to Thunderstore**: Version is `1.0.0`, CI in place, no release cut yet.
-- **Update h2-modpack-template**: ✅ Done — `modpackModule = true` → `modpack = "h2-modpack"`, all "Core" references updated to "Framework"/"coordinator".
+- **Update ModpackModuleTemplate**: ✅ Done — `modpackModule = true` → `modpack = "h2-modpack"`, all "Core" references updated to "Framework"/"coordinator".
 - **Group tiny modules by semantic function**: Some standalone modules are very small; consider merging related ones into slightly larger cohesive mods (e.g. grouped by game mechanic or category).
 
 ### Current state of the codebase
 
-Phase 2 complete. Framework extracted and wired. Coordinator is 49 lines. Setup/ is a standalone submodule. Tests pass (23 in Framework). `release-all.yaml` already has `h2-modpack-coordinator` — no update needed. `new_pack.py` written but not yet run against a real second pack.
+Phase 2 complete. Framework extracted and wired. Coordinator is 49 lines. ModpackTools/ is a standalone submodule. Tests pass (23 in Framework). `release-all.yaml` already has `h2-modpack-coordinator` — no update needed. `new_pack.py` written but not yet run against a real second pack.
 
 ---
 
@@ -76,7 +76,7 @@ Phase 2 complete. Framework extracted and wired. Coordinator is 49 lines. Setup/
 - **Framework** (`adamant-modpack-Framework/`): discovery, hash, HUD, UI — reusable across packs
 - **Lib** (`adamant-modpack-Lib/`): shared utilities (backup, field types, state mgmt)
 - **Modules** (`Submodules/adamant-*/`): 35 standalone mods, each its own repo
-- **Setup/**: deployment + scaffolding scripts
+- **ModpackTools/**: deployment + scaffolding scripts
 
 ### Tech stack
 - Lua 5.1 (Hades 2 engine), 32-bit integers

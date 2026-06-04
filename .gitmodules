@@ -10,9 +10,9 @@
 	path = adamantSpeedrun-Speedrun_Modpack
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Speedrun_Modpack.git
 	branch = main
-[submodule "Setup"]
-	path = Setup
-	url = https://github.com/h2-modpack/Setup.git
+[submodule "ModpackTools"]
+	path = ModpackTools
+	url = https://github.com/h2-modpack/ModpackTools.git
 	branch = main
 [submodule "Submodules/adamantSpeedrun-QoL"]
 	path = Submodules/adamantSpeedrun-QoL

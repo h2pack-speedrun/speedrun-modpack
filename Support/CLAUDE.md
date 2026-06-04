@@ -9,7 +9,7 @@ speedrun-modpack/
 ├── adamant-ModpackSpeedrunCore/  # Coordinator: packId="speedrun", windowTitle="Speedrun", config, profiles
 ├── adamant-ModpackFramework/     # Reusable library: discovery, hash, HUD, UI (org: h2-modpack)
 ├── adamant-ModpackLib/           # Shared utilities: backup, field types, state mgmt (org: h2-modpack)
-├── Setup/                        # Deploy + scaffold + migrate scripts (submodule: h2-modpack/Setup)
+├── ModpackTools/                        # Deploy + scaffold + migrate scripts (submodule: h2-modpack/ModpackTools)
 │   ├── deploy/
 │   │   ├── deploy_all.py         # Full deploy (assets + manifests + symlinks + hooks)
 │   │   ├── deploy_links.py
@@ -18,7 +18,7 @@ speedrun-modpack/
 │   │   ├── deploy_hooks.py
 │   │   └── deploy_common.py
 │   ├── scaffold/
-│   │   ├── new_module.py         # Scaffold a new module repo from h2-modpack-template
+│   │   ├── new_module.py         # Scaffold a new module repo from ModpackModuleTemplate
 │   │   ├── new_pack.py           # Scaffold a new shell repo
 │   │   └── register_submodules.py  # Sync .gitmodules with Submodules/ folders (--prune to remove orphans)
 │   └── migrate/
@@ -82,7 +82,7 @@ loader.load(init, init)
 ## Orgs
 
 - `h2pack-speedrun` — this pack's coordinator + all module repos
-- `h2-modpack` — Framework, Lib, Setup, h2-modpack-template, h2-modular-modpack (infrastructure, shared)
+- `h2-modpack` — Framework, Lib, ModpackTools, ModpackModuleTemplate, h2-modular-modpack (infrastructure, shared)
 
 ## Current Modules (8)
 
@@ -102,7 +102,7 @@ loader.load(init, init)
 
 ### Add a new module
 ```bash
-python Setup/scaffold/new_module.py \
+python ModpackTools/scaffold/new_module.py \
   --name MyModName \
   --pack-id speedrun \
   --namespace adamant \
@@ -112,8 +112,8 @@ Creates GitHub repo `h2pack-speedrun/MyModName`, clones into `Submodules/adamant
 
 ### Local deploy
 ```bash
-python Setup/deploy/deploy_all.py
-python Setup/deploy/deploy_all.py --overwrite   # regenerate manifests
+python ModpackTools/deploy/deploy_all.py
+python ModpackTools/deploy/deploy_all.py --overwrite   # regenerate manifests
 ```
 
 ### Release
@@ -121,8 +121,8 @@ Use **Actions → Release All** on the shell repo. Mass releases must end in `.0
 
 ### Sync submodule list
 ```bash
-python Setup/scaffold/register_submodules.py           # add any new Submodules/ folders + sync Core deps
-python Setup/scaffold/register_submodules.py --prune   # also remove orphaned entries + sync Core deps
+python ModpackTools/scaffold/register_submodules.py           # add any new Submodules/ folders + sync Core deps
+python ModpackTools/scaffold/register_submodules.py --prune   # also remove orphaned entries + sync Core deps
 ```
 Also updates the managed `# -- submodules-start -- / # -- submodules-end --` block in the Core module's `thunderstore.toml` with the current submodule set and their versions.
 

@@ -9,18 +9,18 @@ speedrun-modpack/
 ├── adamantSpeedrun-Speedrun_Modpack/ # Coordinator: pack identity, config, profiles
 ├── adamant-ModpackFramework/      # Shared UI, discovery, hash, HUD
 ├── adamant-ModpackLib/            # Shared utilities and module runtime
-├── Setup/                         # Scaffold and deploy helpers
+├── ModpackTools/                  # Scaffold and deploy helpers
 └── Submodules/                    # Game modules (one repo each)
 ```
 
-## Setup
+## Local Development
 
 ```bash
 git clone --recurse-submodules https://github.com/h2pack-speedrun/speedrun-modpack.git
-python Setup/deploy/deploy_all.py
+python ModpackTools/deploy/deploy_all.py
 ```
 
-Requires Python 3 and r2modman with a profile named `h2-dev`. On Windows, run `Setup/win.bat` as Administrator. On Linux/macOS, run `sudo ./Setup/lin.sh`.
+Requires Python 3 and r2modman with a profile named `h2-dev`. On Windows, run `ModpackTools/win.bat` as Administrator. On Linux/macOS, run `sudo ./ModpackTools/lin.sh`.
 
 ## Shared Docs
 
