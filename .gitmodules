@@ -14,34 +14,6 @@
 	path = Setup
 	url = https://github.com/h2-modpack/Setup.git
 	branch = main
-[submodule "Submodules/adamant-Speedrun_FirstHammer"]
-	path = Submodules/adamant-Speedrun_FirstHammer
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_FirstHammer.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_Timer"]
-	path = Submodules/adamant-Speedrun_Timer
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Timer.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_BugFixesBoons"]
-	path = Submodules/adamant-Speedrun_BugFixesBoons
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesBoons.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_BugFixesEncounters"]
-	path = Submodules/adamant-Speedrun_BugFixesEncounters
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesEncounters.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_BugFixesWeapons"]
-	path = Submodules/adamant-Speedrun_BugFixesWeapons
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesWeapons.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_RunModsNPCs"]
-	path = Submodules/adamant-Speedrun_RunModsNPCs
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_RunModsNPCs.git
-	branch = main
-[submodule "Submodules/adamant-Speedrun_RunModsWorld"]
-	path = Submodules/adamant-Speedrun_RunModsWorld
-	url = https://github.com/h2pack-speedrun/adamant-Speedrun_RunModsWorld.git
-	branch = main
 [submodule "Submodules/adamant-Speedrun_QoL"]
 	path = Submodules/adamant-Speedrun_QoL
 	url = https://github.com/h2pack-speedrun/adamant-Speedrun_QoL.git
@@ -61,4 +33,8 @@
 [submodule "Submodules/adamant-Speedrun_LiveSplit"]
 	path = Submodules/adamant-Speedrun_LiveSplit
 	url = https://github.com/h2pack-speedrun/adamant-Speedrun_LiveSplit.git
+	branch = main
+[submodule "Submodules/adamant-Speedrun_Surface_Rebalance"]
+	path = Submodules/adamant-Speedrun_Surface_Rebalance
+	url = https://github.com/h2pack-speedrun/adamant-Speedrun_Surface_Rebalance.git
 	branch = main
