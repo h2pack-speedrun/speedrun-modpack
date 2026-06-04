@@ -45,9 +45,9 @@ jobs:
         run: |
           python3 Setup/github/release_all.py \
             --org "h2pack-speedrun" \
-            --namespace "adamant" \
+            --namespace "adamantSpeedrun" \
             --pack-pascal "Speedrun" \
-            --core-repo "adamant-Speedrun_Modpack" \
+            --core-repo "adamantSpeedrun-Speedrun_Modpack" \
             --tag "$TAG" \
             --child-dry-run "$DRY_RUN" \
             --targets "$FILTER" \
@@ -74,14 +74,15 @@ jobs:
       - name: Validate coordinator sources
         run: |
           (
-            cd adamant-Speedrun_Modpack
+            cd adamantSpeedrun-Speedrun_Modpack
             luacheck src/
             find src -type f -name '*.lua' -print0 | xargs -0 -r -n1 luac5.2 -p
           )
 
       - name: Validate module sources
         run: |
-          for repo in Submodules/adamant-Speedrun_*; do
+          shopt -s nullglob
+          for repo in Submodules/adamantSpeedrun-*; do
             if [ ! -d "$repo/src" ]; then
               continue
             fi
@@ -108,9 +109,9 @@ jobs:
         run: |
           python3 Setup/github/release_all.py \
             --org "h2pack-speedrun" \
-            --namespace "adamant" \
+            --namespace "adamantSpeedrun" \
             --pack-pascal "Speedrun" \
-            --core-repo "adamant-Speedrun_Modpack" \
+            --core-repo "adamantSpeedrun-Speedrun_Modpack" \
             --tag "$TAG" \
             --child-dry-run "$DRY_RUN" \
             --targets "$FILTER"

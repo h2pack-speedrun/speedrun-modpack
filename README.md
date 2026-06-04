@@ -6,7 +6,7 @@ Shell repo for the Speedrun modpack. Contains all module submodules, the coordin
 
 ```
 speedrun-modpack/
-├── adamant-Speedrun_Modpack/         # Coordinator: pack identity, config, profiles
+├── adamantSpeedrun-Speedrun_Modpack/ # Coordinator: pack identity, config, profiles
 ├── adamant-ModpackFramework/      # Shared UI, discovery, hash, HUD
 ├── adamant-ModpackLib/            # Shared utilities and module runtime
 ├── Setup/                         # Scaffold and deploy helpers
