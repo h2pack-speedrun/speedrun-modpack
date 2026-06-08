@@ -17,8 +17,12 @@ speedrun-modpack/
 
 ```bash
 git clone --recurse-submodules https://github.com/h2pack-speedrun/speedrun-modpack.git
-python ModpackTools/local_deploy/deploy_all.py
+ModpackTools/run ModpackTools/local_deploy/deploy_all.py
 ```
+
+On Windows Command Prompt or PowerShell, use `ModpackTools\run.bat` instead of
+`ModpackTools/run`. The launcher picks an available Python 3 command
+(`python3`, `python`, or `py -3`).
 
 For the full new-pack workflow, use
 [ModpackBootstrap Getting Started](https://github.com/h2-modpack/ModpackBootstrap/blob/main/docs/GETTING_STARTED.md).
