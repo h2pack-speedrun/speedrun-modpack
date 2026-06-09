@@ -96,6 +96,11 @@ jobs:
                 echo "--- Running tests for $repo ---"
                 lua5.2 tests/all.lua
               fi
+
+              if [ -f tests/integration.lua ]; then
+                echo "--- Running integration tests for $repo ---"
+                lua5.2 tests/integration.lua
+              fi
             )
           done
 
