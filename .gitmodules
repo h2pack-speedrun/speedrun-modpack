@@ -2,10 +2,6 @@
 	path = adamant-ModpackLib
 	url = https://github.com/h2-modpack/adamant-ModpackLib.git
 	branch = main
-[submodule "adamant-ModpackFramework"]
-	path = adamant-ModpackFramework
-	url = https://github.com/h2-modpack/adamant-ModpackFramework.git
-	branch = main
 [submodule "adamantSpeedrun-Speedrun_Modpack"]
 	path = adamantSpeedrun-Speedrun_Modpack
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Speedrun_Modpack.git
