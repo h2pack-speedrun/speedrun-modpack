@@ -19,6 +19,7 @@ on:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  TOOLS_REF: "release-tools-2026-06-12"
 
 jobs:
   release:
@@ -75,6 +76,8 @@ jobs:
             --child-dry-run "$DRY_RUN"
             --targets "$FILTER"
             --pin-coordinator-module-deps
+            --module-field "tools-ref=$TOOLS_REF"
+            --coordinator-field "tools-ref=$TOOLS_REF"
           )
           if [ -n "$LIB_VERSION" ]; then
             args+=(--module-field "lib-version=$LIB_VERSION")
@@ -98,6 +101,8 @@ jobs:
             --child-dry-run "$DRY_RUN"
             --targets "$FILTER"
             --pin-coordinator-module-deps
+            --module-field "tools-ref=$TOOLS_REF"
+            --coordinator-field "tools-ref=$TOOLS_REF"
           )
           if [ -n "$LIB_VERSION" ]; then
             args+=(--module-field "lib-version=$LIB_VERSION")
