@@ -13,6 +13,9 @@ on:
       modules:
         description: "Comma-separated repo names to release (blank = all)"
         required: false
+      lib-version:
+        description: "ModpackLib dependency version to pin in child releases (blank keeps current pins)"
+        required: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -31,6 +34,26 @@ jobs:
             exit 1
           fi
 
+      - name: Verify shell CI passed for release commit
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_DISPATCH_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          ci_run=$(gh run list \
+            --repo "$REPO" \
+            --workflow "ci.yaml" \
+            --commit "$SHA" \
+            --status success \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId')
+          if [ -z "$ci_run" ]; then
+            echo "::error title=CI has not passed::No successful ci.yaml run was found for $SHA. Push the shell commit and wait for CI before release_all."
+            exit 1
+          fi
+          echo "Found successful CI run $ci_run for $SHA."
+
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
@@ -42,63 +65,24 @@ jobs:
           TAG: ${{ inputs.tag }}
           DRY_RUN: ${{ inputs.is-dry-run }}
           FILTER: ${{ inputs.modules }}
+          LIB_VERSION: ${{ inputs['lib-version'] }}
         run: |
-          python3 ModpackTools/github/release_all.py \
-            --org "h2pack-speedrun" \
-            --team "adamantSpeedrun" \
-            --core-repo "adamantSpeedrun-Speedrun_Modpack" \
-            --tag "$TAG" \
-            --child-dry-run "$DRY_RUN" \
-            --targets "$FILTER" \
-            --plan-only
-
-      - name: Validate platform dependency versions
-        run: python3 ModpackTools/validate_platform_versions.py
-
-      - name: Install Lua validation runtime
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lua5.2 liblua5.2-dev luarocks
-          sudo luarocks --lua-version=5.2 install luaunit
-          sudo luarocks --lua-version=5.2 install luacheck
-
-      - name: Run ModpackLib tests
-        working-directory: adamant-ModpackLib
-        run: lua5.2 tests/all.lua
-
-      - name: Validate coordinator sources
-        run: |
-          (
-            cd adamantSpeedrun-Speedrun_Modpack
-            luacheck src/
-            find src -type f -name '*.lua' -print0 | xargs -0 -r -n1 luac5.2 -p
+          args=(
+            --org "h2pack-speedrun"
+            --team "adamantSpeedrun"
+            --coordinator-repo "adamantSpeedrun-Speedrun_Modpack"
+            --dependency-org "h2-modpack"
+            --dependency-repo "adamant-ModpackLib"
+            --tag "$TAG"
+            --child-dry-run "$DRY_RUN"
+            --targets "$FILTER"
+            --pin-coordinator-module-deps
           )
-
-      - name: Validate module sources
-        run: |
-          shopt -s nullglob
-          for repo in Submodules/adamantSpeedrun-*; do
-            if [ ! -d "$repo/src" ]; then
-              continue
-            fi
-
-            echo "=== Validating $repo ==="
-            (
-              cd "$repo"
-              luacheck src/
-              find src -type f -name '*.lua' -print0 | xargs -0 -r -n1 luac5.2 -p
-
-              if [ -f tests/all.lua ]; then
-                echo "--- Running tests for $repo ---"
-                lua5.2 tests/all.lua
-              fi
-
-              if [ -f tests/integration.lua ]; then
-                echo "--- Running integration tests for $repo ---"
-                lua5.2 tests/integration.lua
-              fi
-            )
-          done
+          if [ -n "$LIB_VERSION" ]; then
+            args+=(--module-field "lib-version=$LIB_VERSION")
+            args+=(--coordinator-field "lib-version=$LIB_VERSION")
+          fi
+          python3 ModpackTools/github/release_all.py "${args[@]}" --plan-only
 
       - name: Trigger release workflows
         env:
@@ -106,11 +90,21 @@ jobs:
           TAG: ${{ inputs.tag }}
           DRY_RUN: ${{ inputs.is-dry-run }}
           FILTER: ${{ inputs.modules }}
+          LIB_VERSION: ${{ inputs['lib-version'] }}
         run: |
-          python3 ModpackTools/github/release_all.py \
-            --org "h2pack-speedrun" \
-            --team "adamantSpeedrun" \
-            --core-repo "adamantSpeedrun-Speedrun_Modpack" \
-            --tag "$TAG" \
-            --child-dry-run "$DRY_RUN" \
+          args=(
+            --org "h2pack-speedrun"
+            --team "adamantSpeedrun"
+            --coordinator-repo "adamantSpeedrun-Speedrun_Modpack"
+            --dependency-org "h2-modpack"
+            --dependency-repo "adamant-ModpackLib"
+            --tag "$TAG"
+            --child-dry-run "$DRY_RUN"
             --targets "$FILTER"
+            --pin-coordinator-module-deps
+          )
+          if [ -n "$LIB_VERSION" ]; then
+            args+=(--module-field "lib-version=$LIB_VERSION")
+            args+=(--coordinator-field "lib-version=$LIB_VERSION")
+          fi
+          python3 ModpackTools/github/release_all.py "${args[@]}"
