@@ -36,7 +36,18 @@ local function modules(packageIds)
     return result
 end
 
+local function coordinator(packageIds)
+    if #packageIds == 0 then
+        return nil
+    end
+    return {
+        pluginGuid = COORDINATOR_DIR,
+        srcDir = COORDINATOR_DIR .. "/src",
+    }
+end
+
 return {
+    allowEmpty = true,
     smokeRunnerPath = LIB_DIR .. "/tests/harness/smoke_runner.lua",
     libSrcDir = LIB_DIR .. "/src",
     packId = PACK_ID,
@@ -51,9 +62,6 @@ return {
             },
         },
     },
-    coordinator = {
-        pluginGuid = COORDINATOR_DIR,
-        srcDir = COORDINATOR_DIR .. "/src",
-    },
+    coordinator = coordinator(MODULE_PACKAGE_IDS),
     modules = modules(MODULE_PACKAGE_IDS),
 }
