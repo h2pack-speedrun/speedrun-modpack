@@ -84,11 +84,12 @@ end
 
 ## Tooling
 
-Use the shell-owned smoke manifest and shared `ModpackTools/` entrypoints from the shell repo root:
+Use the shell-owned smoke script and shared `ModpackTools/` entrypoints from the shell repo root:
 - Validate pack smoke layout with `lua tests/smoke.lua`.
-- Run the full local assembled-checkout test sweep with `lua tests/test_all.lua` when needed.
+- Run the full local assembled-checkout test sweep with `ModpackTools/run ModpackTools/local_test/all.py` when needed.
+- Register or prune module submodules with `ModpackTools/run ModpackTools/new_module/register_submodules.py`; this also syncs coordinator deps. Smoke derives its module roster from `.gitmodules`.
 - Validate dependency edges with `ModpackTools/run ModpackTools/validate_platform_versions.py`.
-- Deploy source changes into the local r2modman profile with `ModpackTools/run ModpackTools/local_deploy/deploy_all.py`, adding `--overwrite` when regenerating existing files or links.
+- Deploy source changes into the local r2modman profile with `ModpackTools/run ModpackTools/local_deploy/deploy_all.py`; deploy runs smoke first when `tests/smoke.lua` exists. Add `--overwrite` when regenerating existing files or links.
 - On Windows Command Prompt or PowerShell, use `ModpackTools\run.bat` instead of `ModpackTools/run`.
 
 Treat older `Setup/...` commands as stale for these shell repos unless a specific module still owns a local setup script.
