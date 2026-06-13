@@ -16,8 +16,12 @@ speedrun-modpack/
 
 ```bash
 git clone --recurse-submodules https://github.com/h2pack-speedrun/speedrun-modpack.git
+lua tests/smoke.lua
+lua tests/test_all.lua
 ModpackTools/run ModpackTools/local_deploy/deploy_all.py
 ```
+
+Commit CI only runs the shell smoke manifest. Release All checks platform dependency edges and verifies selected child repos have successful CI for the exact release branch commits before dispatching child releases.
 
 On Windows Command Prompt or PowerShell, use `ModpackTools\run.bat` instead of
 `ModpackTools/run`. The launcher picks an available Python 3 command
@@ -29,6 +33,7 @@ For the full new-pack workflow, use
 ## Releasing
 
 Use the **Release All** workflow (`Actions -> Release All`) to publish a new version across all modules.
+The release workflow validates platform dependency edges, checks selected child release refs against their branch heads, and requires successful child CI before dispatching release workflows.
 
 ## Shared Docs
 
