@@ -34,3 +34,7 @@
 	path = Submodules/adamantSpeedrun-Surface_Rebalance
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Surface_Rebalance.git
 	branch = main
+[submodule "Submodules/adamantSpeedrun-Boonless"]
+	path = Submodules/adamantSpeedrun-Boonless
+	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Boonless.git
+	branch = main
