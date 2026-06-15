@@ -38,3 +38,7 @@
 	path = Submodules/adamantSpeedrun-Boonless
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Boonless.git
 	branch = main
+[submodule "Submodules/adamantSpeedrun-InfiniDD"]
+	path = Submodules/adamantSpeedrun-InfiniDD
+	url = https://github.com/h2pack-speedrun/adamantSpeedrun-InfiniDD.git
+	branch = main
