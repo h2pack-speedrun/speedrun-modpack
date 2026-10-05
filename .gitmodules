@@ -18,10 +18,6 @@
 	path = Submodules/adamantSpeedrun-Gameplay_QoL
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Gameplay_QoL.git
 	branch = main
-[submodule "Submodules/adamantSpeedrun-Balance_Changes"]
-	path = Submodules/adamantSpeedrun-Balance_Changes
-	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Balance_Changes.git
-	branch = main
 [submodule "Submodules/adamantSpeedrun-Select_First_Hammer"]
 	path = Submodules/adamantSpeedrun-Select_First_Hammer
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Select_First_Hammer.git
@@ -29,10 +25,6 @@
 [submodule "Submodules/adamantSpeedrun-LiveSplit"]
 	path = Submodules/adamantSpeedrun-LiveSplit
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-LiveSplit.git
-	branch = main
-[submodule "Submodules/adamantSpeedrun-Surface_Rebalance"]
-	path = Submodules/adamantSpeedrun-Surface_Rebalance
-	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Surface_Rebalance.git
 	branch = main
 [submodule "Submodules/adamantSpeedrun-Boonless"]
 	path = Submodules/adamantSpeedrun-Boonless
