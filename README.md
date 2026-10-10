@@ -41,8 +41,9 @@ For the full new-pack workflow, use
 
 ## Releasing
 
-Use the **Release All** workflow (`Actions -> Release All`) to publish a new version across all modules.
-The release workflow validates platform dependency edges, checks selected child release refs against their branch heads, and requires successful child CI before dispatching release workflows.
+Use the **Release All** workflow (`Actions -> Release All`) to publish the pack.
+Leave `tag` blank and each repo gets its own version from its conventional commits since its last tag; repos with nothing to release are skipped, the coordinator is bumped and pins every module, and the plan is shown before anything is dispatched. Use `is-dry-run` to preview it, `versions` (`LiveSplit=6.0.0`) to override a repo, `modules` to limit the run, or `tag` for a single lockstep version.
+The workflow releases each child at its release branch head, validates platform dependency edges, requires successful child CI before dispatching, and commits the updated submodule pointers back to the shell afterwards.
 
 ## Shared Docs
 

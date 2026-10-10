@@ -1,12 +1,15 @@
 name: Release All
-run-name: ${{ format('{0} {1}', inputs.is-dry-run && 'Dry-run' || 'Release', inputs.tag) }}
+run-name: ${{ format('{0} {1}', inputs.is-dry-run && 'Dry-run' || 'Release', inputs.tag || 'auto versions') }}
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Tag / Version number (e.g. 1.0.1)"
-        required: true
+        description: "Lockstep version for every selected repo (e.g. 1.0.1). Blank computes each repo's version from its commits."
+        required: false
+      versions:
+        description: "Per-repo version overrides, comma-separated Target=Major.Minor.Patch (e.g. LiveSplit=6.0.0,Coordinator=6.1.0)"
+        required: false
       is-dry-run:
         description: "Dry-run (trigger dry-runs on all repos, no publish)"
         type: boolean
@@ -61,12 +64,26 @@ jobs:
           submodules: recursive
           token: ${{ secrets.RELEASE_DISPATCH_TOKEN }}
 
+      - name: Check out release branch heads
+        run: |
+          # Releases ship what is on each repo's release branch, so the shell pointers cannot go stale.
+          # ModpackTools stays on its pinned commit because the release scripts run from it.
+          for path in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
+            if [ "$path" = "ModpackTools" ]; then
+              continue
+            fi
+            git submodule update --remote --checkout -- "$path"
+            git -C "$path" fetch --tags --quiet
+          done
+          git submodule status
+
       - name: Validate platform dependency versions
         run: python3 ModpackTools/validate_platform_versions.py
 
       - name: Validate release plan
         env:
           TAG: ${{ inputs.tag }}
+          VERSIONS: ${{ inputs.versions }}
           DRY_RUN: ${{ inputs.is-dry-run }}
           FILTER: ${{ inputs.modules }}
           LIB_VERSION: ${{ inputs['lib-version'] }}
@@ -75,13 +92,18 @@ jobs:
             --org "h2pack-speedrun"
             --team "adamantSpeedrun"
             --coordinator-repo "adamantSpeedrun-Speedrun_Modpack"
-            --tag "$TAG"
             --child-dry-run "$DRY_RUN"
             --targets "$FILTER"
             --pin-coordinator-module-deps
             --module-field "tools-ref=$TOOLS_REF"
             --coordinator-field "tools-ref=$TOOLS_REF"
           )
+          if [ -n "$TAG" ]; then
+            args+=(--tag "$TAG")
+          fi
+          if [ -n "$VERSIONS" ]; then
+            args+=(--versions "$VERSIONS")
+          fi
           if [ -n "$LIB_VERSION" ]; then
             args+=(--module-field "lib-version=$LIB_VERSION")
             args+=(--coordinator-field "lib-version=$LIB_VERSION")
@@ -92,6 +114,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.RELEASE_DISPATCH_TOKEN }}
           TAG: ${{ inputs.tag }}
+          VERSIONS: ${{ inputs.versions }}
           DRY_RUN: ${{ inputs.is-dry-run }}
           FILTER: ${{ inputs.modules }}
           LIB_VERSION: ${{ inputs['lib-version'] }}
@@ -100,7 +123,6 @@ jobs:
             --org "h2pack-speedrun"
             --team "adamantSpeedrun"
             --coordinator-repo "adamantSpeedrun-Speedrun_Modpack"
-            --tag "$TAG"
             --child-dry-run "$DRY_RUN"
             --targets "$FILTER"
             --verify-ci
@@ -108,8 +130,35 @@ jobs:
             --module-field "tools-ref=$TOOLS_REF"
             --coordinator-field "tools-ref=$TOOLS_REF"
           )
+          if [ -n "$TAG" ]; then
+            args+=(--tag "$TAG")
+          fi
+          if [ -n "$VERSIONS" ]; then
+            args+=(--versions "$VERSIONS")
+          fi
           if [ -n "$LIB_VERSION" ]; then
             args+=(--module-field "lib-version=$LIB_VERSION")
             args+=(--coordinator-field "lib-version=$LIB_VERSION")
           fi
           python3 ModpackTools/github/release_all.py "${args[@]}"
+
+      - name: Record released submodule pointers
+        if: ${{ !inputs.is-dry-run }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Pick up the release commits the child workflows just pushed.
+          for path in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
+            if [ "$path" = "ModpackTools" ]; then
+              continue
+            fi
+            git submodule update --remote --checkout -- "$path"
+            git add "$path"
+          done
+          if git diff --cached --quiet; then
+            echo "Submodule pointers already current."
+            exit 0
+          fi
+          git commit --message "chore: update submodules after release"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}"
