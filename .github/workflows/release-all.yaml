@@ -73,7 +73,8 @@ jobs:
               continue
             fi
             git submodule update --remote --checkout -- "$path"
-            git -C "$path" fetch --tags --quiet
+            # Submodules are cloned shallow; version planning needs full history and every tag.
+            git -C "$path" fetch --unshallow --tags --quiet || git -C "$path" fetch --tags --quiet
           done
           git submodule status
 
