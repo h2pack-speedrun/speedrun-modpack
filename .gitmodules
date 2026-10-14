@@ -34,3 +34,7 @@
 	path = Submodules/adamantSpeedrun-InfiniDD
 	url = https://github.com/h2pack-speedrun/adamantSpeedrun-InfiniDD.git
 	branch = main
+[submodule "Submodules/adamantSpeedrun-Quick_Pause"]
+	path = Submodules/adamantSpeedrun-Quick_Pause
+	url = https://github.com/h2pack-speedrun/adamantSpeedrun-Quick_Pause.git
+	branch = main
