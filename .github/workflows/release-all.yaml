@@ -34,7 +34,7 @@ jobs:
           RELEASE_DISPATCH_TOKEN: ${{ secrets.RELEASE_DISPATCH_TOKEN }}
         run: |
           if [ -z "$RELEASE_DISPATCH_TOKEN" ]; then
-            echo "::error title=Missing RELEASE_DISPATCH_TOKEN::Set a repository or organization secret named RELEASE_DISPATCH_TOKEN using a fine-grained PAT or GitHub App token with Contents: read and Actions: read/write access to the shell, coordinator, and module repositories."
+            echo "::error title=Missing RELEASE_DISPATCH_TOKEN::Set a repository or organization secret named RELEASE_DISPATCH_TOKEN using a fine-grained PAT or GitHub App token with Contents: read and write on the shell repository (it commits the updated submodule pointers after a release) and Contents: read plus Actions: read/write on the coordinator and module repositories."
             exit 1
           fi
 
@@ -63,6 +63,17 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.RELEASE_DISPATCH_TOKEN }}
+
+      - name: Check shell push access
+        run: |
+          # The final step commits the new submodule pointers to this repo. Fail now, before anything is
+          # published, if the token cannot push here. A dry-run push is refused without write access.
+          if ! git push --dry-run origin "HEAD:${{ github.ref_name }}" 2> push-check.err; then
+            cat push-check.err
+            echo "::error title=No shell write access::RELEASE_DISPATCH_TOKEN cannot push to this repository. Give it Contents: Read and write here before releasing."
+            exit 1
+          fi
+          rm -f push-check.err
 
       - name: Check out release branch heads
         run: |
@@ -162,4 +173,7 @@ jobs:
           fi
           git commit --message "chore: update submodules after release"
           git pull --rebase origin "${{ github.ref_name }}"
-          git push origin "HEAD:${{ github.ref_name }}"
+          if ! git push origin "HEAD:${{ github.ref_name }}"; then
+            echo "::error title=Pointer commit not pushed::The releases succeeded; only the shell submodule pointer commit failed. Update the pointers by hand (git submodule update --remote, commit, push)."
+            exit 1
+          fi
