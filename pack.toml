@@ -3,9 +3,7 @@
 # release with the pack, but the pack does not install or pin them.
 [dependencies]
 modules = [
-    "Boonless",
     "Gameplay_QoL",
-    "InfiniDD",
     "LiveSplit",
     "QoL",
     "Select_First_Hammer",
