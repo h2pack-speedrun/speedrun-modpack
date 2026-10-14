@@ -1,0 +1,12 @@
+# Modules that are Thunderstore dependencies of the coordinator, by package id.
+# Registered modules not listed here are standalone: they boot in smoke, deploy locally and
+# release with the pack, but the pack does not install or pin them.
+[dependencies]
+modules = [
+    "Boonless",
+    "Gameplay_QoL",
+    "InfiniDD",
+    "LiveSplit",
+    "QoL",
+    "Select_First_Hammer",
+]

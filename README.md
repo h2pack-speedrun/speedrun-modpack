@@ -23,6 +23,11 @@ ModpackTools/run ModpackTools/local_deploy/deploy_all.py
 
 Commit CI only runs the shell smoke script. Local deploy runs that same smoke preflight before writing to the live profile. Release All checks platform dependency edges and verifies selected child repos have successful CI for the exact release branch commits before dispatching child releases.
 
+`pack.toml` lists which modules are Thunderstore dependencies of the coordinator. Modules registered
+under `Submodules/` but not listed are standalone: they boot in smoke, deploy locally and release with
+the pack, but the pack does not install or pin them. Pass `--dependency` to `create.py` to list a new
+module.
+
 When adding or removing module submodules, use the registration tool so
 `.gitmodules` and coordinator dependencies stay aligned. Smoke derives its
 module roster from `.gitmodules`.
